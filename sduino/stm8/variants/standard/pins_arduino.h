@@ -153,9 +153,27 @@ extern const uint8_t digitalPinToAnalogChannelMap[];
 #define digitalPinToPCICRbit(p) (((p) <= 7) ? 2 : (((p) <= 13) ? 0 : 1))
 #define digitalPinToPCMSK(p)    (((p) <= 7) ? (&PCMSK2) : (((p) <= 13) ? (&PCMSK0) : (((p) <= 21) ? (&PCMSK1) : ((uint8_t *)0))))
 #define digitalPinToPCMSKbit(p) (((p) <= 7) ? (p) : (((p) <= 13) ? ((p) - 8) : ((p) - 14)))
-
-#define digitalPinToInterrupt(p)  ((p) == 2 ? 0 : ((p) == 3 ? 1 : NOT_AN_INTERRUPT))
 */
+
+const uint8_t digitalPinToInterruptMap[] = {
+  (uint8_t)INT_PORTA, // PA1
+  (uint8_t)INT_PORTA, // PA2
+  (uint8_t)INT_PORTA, // PA3
+  (uint8_t)INT_PORTB, // PB5
+  (uint8_t)INT_PORTB, // PB4
+  (uint8_t)INT_PORTC, // PC3
+  (uint8_t)INT_PORTC, // PC4
+  (uint8_t)INT_PORTC, // PC5
+  (uint8_t)INT_PORTC, // PC6
+  (uint8_t)INT_PORTC, // PC7
+  (uint8_t)INT_PORTD, // PD1
+  (uint8_t)INT_PORTD, // PD2
+  (uint8_t)INT_PORTD, // PD3
+  (uint8_t)INT_PORTD, // PD4
+  (uint8_t)INT_PORTD, // PD5
+  (uint8_t)INT_PORTD  // PD6
+};
+#define digitalPinToInterrupt(p)  (((uint16_t)p) < NUM_DIGITAL_PINS ? digitalPinToInterruptMap[p] : NOT_AN_INTERRUPT)
 
 #ifdef ARDUINO_MAIN
 
